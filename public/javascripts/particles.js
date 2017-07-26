@@ -2,12 +2,15 @@ var particles;
 var font;
 var topText = 'Click to explode.';
 var topTextSize = 36;
-var mainText = 'Hello World !';
+var mainText = title;
+console.log(title);
 var mainTextSize = 160;
 var isEscape = false;
 
 var particleText = 'Aderant';
 var count = 0;
+
+var escapeMag = 1.5;
 
 function preload() {
     font = loadFont('/fonts/AvenirNextLTPro-Demi.otf');
@@ -23,8 +26,6 @@ function setup() {
     var bounds = font.textBounds(mainText, 0, 0, mainTextSize);
     var position = createVector((width/2 - bounds.w/2), (height/2 + bounds.h/2));
 
-    console.log(position.x + ' ' + position.y);
-
     var points = font.textToPoints(mainText, position.x, position.y, mainTextSize);
 
     points.forEach(function (pt) {
@@ -35,6 +36,8 @@ function setup() {
 }
 
 function draw() {
+    escapeMag = document.getElementById("myRange").value/20;
+
     background(100);
     particles.forEach(function (particle) {
         particle.arrive();
@@ -86,7 +89,7 @@ Particle.prototype.arrive = function () {
 Particle.prototype.escape = function () {
     var mousePos = createVector(mouseX, mouseY);
     var escape = this.escapeForce(mousePos);
-    escape.mult(5);
+    escape.mult(6);
     this.applyForce(escape);
 };
 
@@ -94,7 +97,7 @@ Particle.prototype.arriveForce = function (target) {
     var desired = p5.Vector.sub(target, this.position);
     var distance = desired.mag();
     var speed = this.maxSpeed;
-    if (distance < 100) {
+    if (distance < 200) {
         speed = map(distance, 0, 100, 0, this.maxSpeed);
     }
     desired.setMag(speed);
@@ -108,7 +111,7 @@ Particle.prototype.escapeForce = function (target) {
     var distance = desired.mag();
     if (distance < 50) {
         desired.setMag(this.maxSpeed);
-        desired.mult(-1);
+        desired.mult(-escapeMag);
         var steer = p5.Vector.sub(desired, this.vel);
         steer.limit(this.maxForce);
         return steer;

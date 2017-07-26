@@ -1,5 +1,10 @@
 extends layout
 
 block content
-  h1= title
-  p Welcome to #{title}
+  div
+    h1= title
+    input#myRange(type='range', min='0', max='60', value='30')
+
+    script(type='text/javascript').
+      var title = !{JSON.stringify(title)};
+    script(src="/javascripts/particles.js")
