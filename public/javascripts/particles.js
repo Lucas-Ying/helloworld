@@ -6,12 +6,18 @@ var mainText = 'Hello World !';
 var mainTextSize = 160;
 var isEscape = false;
 
+var particleText = 'Aderant';
+var count = 0;
+
 function preload() {
     font = loadFont('/fonts/AvenirNextLTPro-Demi.otf');
 }
 
 function setup() {
     createCanvas(1200, 600);
+    smooth();
+    cursor(CROSS);
+
     particles = [];
 
     var bounds = font.textBounds(mainText, 0, 0, mainTextSize);
@@ -65,9 +71,10 @@ Particle.prototype.update = function () {
 };
 
 Particle.prototype.show = function () {
-    stroke(255);
-    strokeWeight(this.size);
-    point(this.position.x, this.position.y);
+    fill(255);
+    text(particleText.charAt(count), this.position.x, this.position.y);
+    count++;
+    if(count >= particleText.length) count = 0;
 };
 
 Particle.prototype.arrive = function () {
