@@ -15,7 +15,7 @@ router.get('/api', sse.init);
 var RtmClient = require('@slack/client').RtmClient;
 var CLIENT_EVENTS = require('@slack/client').CLIENT_EVENTS;
 var RTM_EVENTS = require('@slack/client').RTM_EVENTS;
-var bot_token = process.env.SLACK_BOT_TOKEN || '';
+var bot_token = 'xoxb-217575678592-3qgafXUHWWmexgcPnoS5Dv0w';
 var rtm = new RtmClient(bot_token);
 
 // The client will emit an RTM.AUTHENTICATED event on successful connection, with the `rtm.start` payload if you want to cache it
@@ -24,7 +24,6 @@ rtm.on(CLIENT_EVENTS.RTM.AUTHENTICATED, function (rtmStartData) {
 });
 
 rtm.on(RTM_EVENTS.MESSAGE, function handleRtmMessage(message) {
-    console.log('Message:', message.text);
     sse.send(message.text);
 });
 
