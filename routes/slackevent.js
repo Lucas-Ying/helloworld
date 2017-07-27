@@ -1,15 +1,21 @@
 var express = require('express');
 var router = express.Router();
 
-var SSE = require('express-sse');
-var sse = new SSE();
+/* sse */
+var sse = require('../sse');
+router.use(sse);
+
+var connection;
+
+router.get('/api', function(req, res) {
+    res.sseSetup();
+    connection = res;
+});
 
 /* GET slack listening. */
 router.get('/', function(req, res, next) {
     res.send('slackbot message');
 });
-
-router.get('/api', sse.init);
 
 /* Start a rtm client for slack bot. */
 var RtmClient = require('@slack/client').RtmClient;
@@ -27,7 +33,7 @@ rtm.on(CLIENT_EVENTS.RTM.AUTHENTICATED, function (rtmStartData) {
 
 rtm.on(RTM_EVENTS.MESSAGE, function handleRtmMessage(message) {
     console.log('Message:', message.text);
-    sse.send(message.text);
+    connection.sseSend(message.text);
 });
 
 rtm.start();
