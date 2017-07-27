@@ -2,7 +2,7 @@ var express = require('express');
 var router = express.Router();
 
 var SSE = require('express-sse');
-var sse = new SSE(["hello", "world"]);
+var sse = new SSE();
 
 /* GET slack listening. */
 router.get('/', function(req, res, next) {
