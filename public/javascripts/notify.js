@@ -1,5 +1,5 @@
 if (!!window.EventSource) {
-    var eventsource = new EventSource('/slackevent/api');
+    var eventsource = new EventSource('http://lucasying.com/slackevent/api');
 
     eventsource.addEventListener('message', function(event) {
         // votes = JSON.parse(event.data);
