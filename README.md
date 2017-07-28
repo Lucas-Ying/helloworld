@@ -1,3 +1,1 @@
 # hello-world
-
-Have fun!
