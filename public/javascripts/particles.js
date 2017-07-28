@@ -46,7 +46,8 @@ function draw() {
         }
         particle.update();
         particle.show();
-    })
+    });
+    count = 0;
 }
 
 function updateText() {
