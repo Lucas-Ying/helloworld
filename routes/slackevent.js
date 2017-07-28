@@ -1,6 +1,9 @@
 var express = require('express');
 var router = express.Router();
 
+var fs = require('fs');
+var token = fs.readFileSync('../token.txt', 'utf8');
+
 /* sse */
 var sse = require('../sse');
 router.use(sse);
@@ -21,7 +24,7 @@ router.get('/', function(req, res, next) {
 var RtmClient = require('@slack/client').RtmClient;
 var CLIENT_EVENTS = require('@slack/client').CLIENT_EVENTS;
 var RTM_EVENTS = require('@slack/client').RTM_EVENTS;
-var bot_token = process.env.SLACK_BOT_TOKEN || '';
+var bot_token = token;
 var rtm = new RtmClient(bot_token);
 
 // The client will emit an RTM.AUTHENTICATED event on successful connection, with the `rtm.start` payload if you want to cache it
