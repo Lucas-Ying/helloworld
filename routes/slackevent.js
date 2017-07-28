@@ -3,6 +3,7 @@ var router = express.Router();
 
 var fs = require('fs');
 var token = fs.readFileSync('../token.txt', 'utf8');
+console.log(token);
 
 /* sse */
 var sse = require('../sse');
