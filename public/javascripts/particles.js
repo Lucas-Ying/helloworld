@@ -49,6 +49,20 @@ function draw() {
     })
 }
 
+function updateText() {
+    particles = [];
+
+    var bounds = font.textBounds(mainText, 0, 0, mainTextSize);
+    var position = createVector((width/2 - bounds.w/2), (height/2 + bounds.h/2));
+
+    var points = font.textToPoints(mainText, position.x, position.y, mainTextSize);
+
+    points.forEach(function (pt) {
+        var particle = new Particle(pt.x, pt.y, 6);
+        particles.push(particle);
+    });
+}
+
 function mousePressed() {
     isEscape = true;
 }

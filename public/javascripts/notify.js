@@ -3,8 +3,14 @@ if (!!window.EventSource) {
 
     eventsource.addEventListener('message', function(event) {
         // votes = JSON.parse(event.data);
+        var msg = JSON.parse(event.data).split(" ");
         document.getElementById("notification").innerHTML = JSON.parse(event.data);
-        console.log("message: " + event.data);
+        if (msg.length > 0) {
+            if (msg[0] == 'helloworld') {
+                mainText = msg[2] + ' ' + msg[3];
+                updateText();
+            }
+        }
     }, false);
 
     eventsource.addEventListener('open', function(event) {
